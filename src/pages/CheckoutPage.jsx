@@ -1,0 +1,119 @@
+import Product from "../components/Product";
+import '../components/checkout.css'
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+export default function CheckoutPage({products, setProducts}) {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [adress, setAdress] = useState("")
+
+  const totalPrice = products.reduce(
+    (total, product) => Math.round((total + product.price * product.quantity) * 100)/100,
+    0
+  );
+
+  function increaseQuantity(id) {
+    setProducts(prev =>
+      prev.map(product =>
+        product.id === id
+          ? { ...product, quantity: product.quantity + 1 }
+          : product
+      )
+    );
+  }
+
+  function decreaseQuantity(id) {
+    setProducts(prev =>
+      prev.map(product =>
+        product.id === id
+          ? { ...product, quantity: product.quantity - 1 }
+          : product
+      )
+    );
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevents page reload
+
+    const items = products
+      .filter(product => product.quantity > 0)
+      .map(product => ({
+        itemId: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: product.quantity
+      }));
+
+    if (items.length === 0){
+      alert("Cart is empty")
+      return
+    }
+
+    const orderDetails = {
+      name, email, adress, items, totalPrice
+    }
+
+    console.log('Form Submitted Data:', orderDetails);
+  };
+
+  return (
+    <div className="container">
+      <h1>Checkout</h1>
+      <Link to="/">
+        Items
+      </Link>
+
+      {products.map(product => {
+        if (product.quantity > 0){
+          return(
+            <Product
+                          key={product.id}
+                          product={product}
+                          onIncrease={increaseQuantity}
+                          onDecrease={decreaseQuantity}/>
+          )
+        }
+      })}
+
+      <h2>Total: ${totalPrice.toFixed(2)}</h2>
+
+      <div className="create">
+        <h3>Checkout</h3>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Name:</label>
+            <input
+              type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              />
+          </div>
+
+          <div>
+            <label>Email:</label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              />
+          </div>
+
+          <div>
+            <label>Adress:</label>
+            <input
+              type="text"
+              required
+              value={adress}
+              onChange={(e) => setAdress(e.target.value)}
+              />
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  );
+}

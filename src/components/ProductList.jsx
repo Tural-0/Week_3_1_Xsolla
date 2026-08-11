@@ -1,15 +1,9 @@
 import { useState } from "react";
 import Product from "./Product";
+import { Link } from "react-router-dom";
 import './productlist.css';
 
-import { PRODUCTS } from "../data/products";
-
-export default function ProductList() {
-  const [products, setProducts] = useState(PRODUCTS);
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [adress, setAdress] = useState("")
-
+export default function ProductList({products, setProducts}) {
   function addProduct() {
     const id = (products[products.length - 1].id ?? 0) + 1;
 
@@ -23,16 +17,6 @@ export default function ProductList() {
 
     setProducts((prevValues) => [...prevValues, product]);
   }
-
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevents page reload
-
-    const orderDetails = {
-      name, email, adress, totalPrice
-    }
-
-    console.log('Form Submitted Data:', orderDetails);
-  };
 
   function increaseQuantity(id) {
     setProducts(prev =>
@@ -62,6 +46,7 @@ export default function ProductList() {
   return (
     <div className="container">
       <div className="products">
+        <h2>Total: ${totalPrice.toFixed(2)}</h2>
         {products.length > 0 &&
           products.map((product) => (
             <Product
@@ -71,46 +56,11 @@ export default function ProductList() {
               onDecrease={decreaseQuantity}
             />
           ))}
-        <button className="add-button" onClick={addProduct}>
-          Add new product
-        </button>
-      </div>
-
-      <div className="create">
-        <h3>Total: ${totalPrice}</h3>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Name:</label>
-            <input
-              type="text"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              />
-          </div>
-
-          <div>
-            <label>Email:</label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              />
-          </div>
-
-          <div>
-            <label>Adress:</label>
-            <input
-              type="text"
-              required
-              value={adress}
-              onChange={(e) => setAdress(e.target.value)}
-              />
-          </div>
-
-          <button type="submit">Submit</button>
-        </form>
+        <Link to="/addProduct">
+          <button className="add-button">
+            Add new product
+          </button>
+        </Link>
       </div>
     </div>
   );

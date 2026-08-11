@@ -4,10 +4,13 @@ import { useState } from "react";
 //import { PRODUCTS } from "../data/products";
 
 export default function Product({ product, onIncrease, onDecrease }) {
+
+  const defaultPic = "https://images.unsplash.com/photo-1541480601022-2308c0f02487?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmFuZG9tJTIwb2JqZWN0c3xlbnwwfHwwfHx8MA%3D%3D"
+
   return (
     <div className="product">
       <div>
-        <img src={product.imageUrl} alt="pic"/>
+        <img src={product.imageUrl === "" ? defaultPic : product.imageUrl} alt="pic"/>
       </div>
 
       <div>

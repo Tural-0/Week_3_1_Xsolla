@@ -34,3 +34,9 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Creates two equal columns */
+    gap: 15px;
+}
