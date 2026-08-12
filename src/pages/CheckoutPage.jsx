@@ -1,12 +1,31 @@
 import Product from "../components/Product";
 import '../components/checkout.css'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function CheckoutPage({products, setProducts}) {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [adress, setAdress] = useState("")
+  const [name, setName] = useLocalStorage("userName","")
+  const [email, setEmail] = useLocalStorage("email","")
+  const [address, setAddress] = useLocalStorage("address","")
+
+  function useLocalStorage(key, init) {
+  const [value, setValue] =
+    useState(() => {
+      const stored =
+        localStorage.getItem(key);
+      return stored
+        ? JSON.parse(stored)
+        : init;
+    });
+
+    useEffect(() => {
+      localStorage.setItem(
+        key, JSON.stringify(value)
+      );
+    }, [key, value]);
+
+   return [value, setValue];
+  }
 
   const totalPrice = products.reduce(
     (total, product) => Math.round((total + product.price * product.quantity) * 100)/100,
@@ -51,7 +70,7 @@ export default function CheckoutPage({products, setProducts}) {
     }
 
     const orderDetails = {
-      name, email, adress, items, totalPrice
+      name, email, address, items, totalPrice
     }
 
     console.log('Form Submitted Data:', orderDetails);
@@ -85,6 +104,7 @@ export default function CheckoutPage({products, setProducts}) {
             <label>Name:</label>
             <input
               type="text"
+              placeholder="Your name"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -95,6 +115,7 @@ export default function CheckoutPage({products, setProducts}) {
             <label>Email:</label>
             <input
               type="email"
+              placeholder="example@gmail.com"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -102,12 +123,13 @@ export default function CheckoutPage({products, setProducts}) {
           </div>
 
           <div>
-            <label>Adress:</label>
+            <label>Address:</label>
             <input
               type="text"
+              placeholder="Your home address"
               required
-              value={adress}
-              onChange={(e) => setAdress(e.target.value)}
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
               />
           </div>
 
