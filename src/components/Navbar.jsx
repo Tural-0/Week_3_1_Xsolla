@@ -10,6 +10,37 @@ export default function Navbar({products, dispatch}){
     const [cartCount, setCartCount] = useState(0)
     const [isPopupOpen, setIsPopupOpen] = useState(false); // State tracking
 
+    const [order, setOrder] = useLocalStorage("order",null)
+
+    function useLocalStorage(key, init) {
+        const [value, setValue] =
+            useState(() => {
+                const stored =
+                localStorage.getItem(key);
+            return stored
+                ? JSON.parse(stored)
+                : init;
+            });
+
+        useEffect(() => {
+            localStorage.setItem(
+            key, JSON.stringify(value)
+            );
+        }, [key, value]);
+
+        return [value, setValue];
+    }
+  
+    useEffect(() => {
+        products.map(product =>{
+            if (order.items[product.id-1] != null){
+                if (product.id === order.items[product.id-1].itemId){
+                    product.quantity = order.items[product.id-1].quantity
+                }
+            }
+        })
+    }, [order]);
+
     useEffect(() => {
         setCartCount(prev => products.filter(
             p => p.quantity >= 1

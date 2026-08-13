@@ -8,6 +8,7 @@ export default function CheckoutPage({products, dispatch}) {
   const [name, setName] = useLocalStorage("userName","")
   const [email, setEmail] = useLocalStorage("email","")
   const [address, setAddress] = useLocalStorage("address","")
+  const [order, setOrder] = useLocalStorage("order",null)
 
   function useLocalStorage(key, init) {
   const [value, setValue] =
@@ -27,7 +28,7 @@ export default function CheckoutPage({products, dispatch}) {
 
    return [value, setValue];
   }
-
+  
   const totalPrice = products.reduce(
     (total, product) => Math.round((total + product.price * product.quantity) * 100)/100,
     0
@@ -54,6 +55,7 @@ export default function CheckoutPage({products, dispatch}) {
       name, email, address, items, totalPrice
     }
 
+    setOrder(prev => orderDetails)
     console.log('Form Submitted Data:', orderDetails);
   };
 
