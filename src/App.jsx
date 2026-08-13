@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PRODUCTS } from "./data/products";
-import { useState, useReducer, useEffect } from "react";
+import { useState, useReducer, useEffect, createContext } from "react";
 
 import ProductsPage from "./pages/ProductsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import AddProductPage from "./pages/AddProductPage";
 import Footer from "./components/Footer";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
-  const [items, setProducts] = useState(PRODUCTS);
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") || "light"
   );
@@ -27,65 +27,28 @@ function App() {
     document.body.className = theme;
   }, [theme]);
 
-  function itemsReducer(products, action) {
-    switch (action.type) {
-      case 'ADD':
-        const id = (products[products.length - 1].id ?? 0) + 1;
-
-        const product = {
-          id,
-          name: action.name,
-          price: parseInt(action.price),
-          quantity: 0,
-          imageUrl: action.img
-        };
-
-        return [...products, product];
-      case 'INCREASE':
-        return products.map(product =>
-          product.id === action.id
-            ? { ...product, quantity: product.quantity + 1 }
-            : product
-        )
-      case 'DECREASE':
-        return products.map(product =>
-          product.id === action.id
-            ? { ...product, quantity: product.quantity - 1 }
-            : product
-        )
-    }
-  }
-
-  const [products, dispatch] = useReducer(
-    itemsReducer,
-    PRODUCTS
-  );
-
   return (
     <>
+    <CartProvider>
+
     <BrowserRouter>
       <Routes>
         <Route path="/" element={
-          <ProductsPage
-            products = {products}
-            dispatch = {dispatch}/>
-          } />
+          <ProductsPage/>
+        } />
         <Route path="/checkout" element={
-          <CheckoutPage
-            products = {products}
-            dispatch = {dispatch}/>
-          } />
+          <CheckoutPage/>
+        } />
         <Route path="/addProduct" element={
-          <AddProductPage
-            products = {products}
-            dispatch = {dispatch}/>
-          } />
+          <AddProductPage/>
+        } />
       </Routes>
     </BrowserRouter>
+    </CartProvider>
     <Footer
         theme={theme}
         onToggleTheme={toggleTheme}
-    />
+        />
     </>
   );
 }

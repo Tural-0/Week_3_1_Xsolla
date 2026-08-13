@@ -1,13 +1,16 @@
 import '../styles/checkout.css'
-import { useState, useReducer } from "react";
+import { useState, useReducer, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from '../components/Navbar';
+import { CartCtx } from "../context/CartContext";
 
-export default function AddProductPage({products, dispatch}) {
+export default function AddProductPage() {
   const [name, setName] = useState("")
   const [price, setPrice] = useState(0)
   const [img, setImg] = useState("")
   const navigate = useNavigate()
+
+  const {products, dispatch} = useContext(CartCtx)
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevents page reload

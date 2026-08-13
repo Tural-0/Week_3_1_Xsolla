@@ -1,14 +1,17 @@
 import Product from "../components/Product";
 import '../styles/checkout.css'
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useReducer, useContext } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { CartCtx } from "../context/CartContext";
 
-export default function CheckoutPage({products, dispatch}) {
+export default function CheckoutPage() {
   const [name, setName] = useLocalStorage("userName","")
   const [email, setEmail] = useLocalStorage("email","")
   const [address, setAddress] = useLocalStorage("address","")
   const [order, setOrder] = useLocalStorage("order",null)
+
+  const {products, dispatch} = useContext(CartCtx)
 
   function useLocalStorage(key, init) {
   const [value, setValue] =

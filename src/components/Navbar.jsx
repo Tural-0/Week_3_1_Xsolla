@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
 import "../styles/navbar.css"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Popup from "./Popup";
 import CheckoutPage from "../pages/CheckoutPage";
 import cartImage from "../assets/cart.png"
+import { CartCtx } from "../context/CartContext";
 
-export default function Navbar({products, dispatch}){
+export default function Navbar(){
 
     const [cartCount, setCartCount] = useState(0)
     const [isPopupOpen, setIsPopupOpen] = useState(false); // State tracking
 
     const [order, setOrder] = useLocalStorage("order",null)
+
+    const {products, dispatch} = useContext(CartCtx)
 
     function useLocalStorage(key, init) {
         const [value, setValue] =
@@ -73,7 +76,7 @@ export default function Navbar({products, dispatch}){
             </div>
             
             <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-                <CheckoutPage products={products} dispatch={dispatch}/>
+                <CheckoutPage/>
             </Popup>
         </li>
       </ul>

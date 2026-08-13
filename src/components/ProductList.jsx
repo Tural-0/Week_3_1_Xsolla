@@ -1,9 +1,12 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useContext } from "react";
 import Product from "./Product";
 import { Link } from "react-router-dom";
 import '../styles/productlist.css';
+import { CartCtx } from "../context/CartContext";
 
-export default function ProductList({products, dispatch}) {
+export default function ProductList() {
+
+  const {products, dispatch} = useContext(CartCtx)
 
   const totalPrice = products.reduce(
     (total, product) => Math.round((total + product.price * product.quantity) * 100)/100,
