@@ -7,25 +7,27 @@ import CheckoutPage from "./pages/CheckoutPage";
 import AddProductPage from "./pages/AddProductPage";
 import Footer from "./components/Footer";
 import { CartProvider } from "./context/CartContext";
+import { useTheme } from "./custom_hooks/useTheme";
 
 function App() {
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme") || "light"
-  );
 
-  function toggleTheme() {
-    setTheme(prevTheme => {
-      const newTheme = prevTheme === "light" ? "dark" : "light";
+  ///function useTheme() {
+  ///  const [theme, setTheme] = useLocalStorage("theme", "light");
+///
+  ///  useEffect(() => {
+  ///    document.body.className = theme;
+  ///  }, [theme]);
+///
+  ///  function toggleTheme() {
+  ///    setTheme(prev =>
+  ///      prev === "light" ? "dark" : "light"
+  ///    );
+  ///  }
+///
+  ///  return { theme, toggleTheme };
+  ///}
 
-      localStorage.setItem("theme", newTheme);
-
-      return newTheme;
-    });
-  }
-
-  useEffect(() => {
-    document.body.className = theme;
-  }, [theme]);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <>
