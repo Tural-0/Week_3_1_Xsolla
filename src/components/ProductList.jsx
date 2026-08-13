@@ -54,6 +54,7 @@ export default function ProductList({products, setProducts}) {
               product={product}
               onIncrease={increaseQuantity}
               onDecrease={decreaseQuantity}
+              isInCart={false}
             />
           ))}
       </div>
