@@ -1,7 +1,8 @@
 import Product from "../components/Product";
-import '../components/checkout.css'
+import '../styles/checkout.css'
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 export default function CheckoutPage({products, setProducts}) {
   const [name, setName] = useLocalStorage("userName","")
@@ -77,20 +78,17 @@ export default function CheckoutPage({products, setProducts}) {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="container">
-      <h1>Checkout</h1>
-      <Link to="/">
-        Items
-      </Link>
-
       {products.map(product => {
         if (product.quantity > 0){
           return(
             <Product
-                          key={product.id}
-                          product={product}
-                          onIncrease={increaseQuantity}
-                          onDecrease={decreaseQuantity}/>
+            key={product.id}
+            product={product}
+            onIncrease={increaseQuantity}
+            onDecrease={decreaseQuantity}/>
           )
         }
       })}
@@ -137,5 +135,6 @@ export default function CheckoutPage({products, setProducts}) {
         </form>
       </div>
     </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
-import '../components/checkout.css'
+import '../styles/checkout.css'
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from '../components/Navbar';
 
 export default function AddProductPage({products, setProducts}) {
   const [name, setName] = useState("")
@@ -35,12 +36,9 @@ export default function AddProductPage({products, setProducts}) {
   }
 
   return (
+    <>
+    <Navbar/>
     <div className="container">
-      <h1>Add product</h1>
-      <Link to="/">
-        Items
-      </Link>
-
       <div className="create">
         <h3>Product details</h3>
         <form onSubmit={handleSubmit}>
@@ -77,5 +75,6 @@ export default function AddProductPage({products, setProducts}) {
         </form>
       </div>
     </div>
+    </>
   );
 }

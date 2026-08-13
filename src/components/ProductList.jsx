@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Product from "./Product";
 import { Link } from "react-router-dom";
-import './productlist.css';
+import '../styles/productlist.css';
 
 export default function ProductList({products, setProducts}) {
   function addProduct() {
@@ -56,11 +56,6 @@ export default function ProductList({products, setProducts}) {
               onDecrease={decreaseQuantity}
             />
           ))}
-        <Link to="/addProduct">
-          <button className="add-button">
-            Add new product
-          </button>
-        </Link>
       </div>
     </div>
   );

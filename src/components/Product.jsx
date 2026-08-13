@@ -1,4 +1,4 @@
-import "./product.css";
+import "../styles/product.css";
 import { useState } from "react";
 
 //import { PRODUCTS } from "../data/products";
