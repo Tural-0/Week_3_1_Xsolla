@@ -21,14 +21,14 @@
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   box-sizing: border-box;
   display: block;
 }
 
 .create button{
   background: #f1356d;
-  color: #fff;
+  color: var(--text);
   border: 0;
   padding: 8px;
   border-radius: 8px;

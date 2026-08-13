@@ -1,13 +1,31 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PRODUCTS } from "./data/products";
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 
 import ProductsPage from "./pages/ProductsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import AddProductPage from "./pages/AddProductPage";
+import Footer from "./components/Footer";
 
 function App() {
   const [items, setProducts] = useState(PRODUCTS);
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") || "light"
+  );
+
+  function toggleTheme() {
+    setTheme(prevTheme => {
+      const newTheme = prevTheme === "light" ? "dark" : "light";
+
+      localStorage.setItem("theme", newTheme);
+
+      return newTheme;
+    });
+  }
+
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
 
   function itemsReducer(products, action) {
     switch (action.type) {
@@ -44,6 +62,7 @@ function App() {
   );
 
   return (
+    <>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={
@@ -63,6 +82,11 @@ function App() {
           } />
       </Routes>
     </BrowserRouter>
+    <Footer
+        theme={theme}
+        onToggleTheme={toggleTheme}
+    />
+    </>
   );
 }
 

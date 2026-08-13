@@ -3,7 +3,7 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333333;
+  background-color: var(--background);
 }
 
 ul li {
@@ -16,14 +16,14 @@ ul li {
 
 ul li a {
   display: block;
-  color: white;
+  color: var(--text);
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
 
 ul li a:hover {
-  background-color: #111111;
+  background-color: var(--background);
 }
 
 /*Cart*/
@@ -54,7 +54,7 @@ ul li a:hover {
   top: -5px;          /* Pulls badge above the top boundary */
   right: -8px;        /* Pushes badge past the right boundary */
   background-color: #ff3b30; /* Bright notification red color */
-  color: #ffffff;     /* White contrast text */
+  color: var(--text);     /* White contrast text */
   font-size: 12px;
   font-weight: bold;
   
@@ -84,7 +84,7 @@ ul li a:hover {
 .cart-svg {
   width: 24px;
   height: 24px;
-  color: #333;
+  color: var(--primary);
   transition: color 0.2s ease;
 }
 
