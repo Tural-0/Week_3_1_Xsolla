@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar"
 
 export default function ProductsPage({products, setProducts}) {
   return <>
-    <Navbar/>
+    <Navbar products={products} setProducts={setProducts}/>
     <ProductList products={products} setProducts={setProducts}/>;
   </>
 }

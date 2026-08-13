@@ -37,7 +37,7 @@ export default function AddProductPage({products, setProducts}) {
 
   return (
     <>
-    <Navbar/>
+    <Navbar products={products} setProducts={setProducts}/>
     <div className="container">
       <div className="create">
         <h3>Product details</h3>

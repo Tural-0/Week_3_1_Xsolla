@@ -79,7 +79,6 @@ export default function CheckoutPage({products, setProducts}) {
 
   return (
     <>
-    <Navbar/>
     <div className="container">
       {products.map(product => {
         if (product.quantity > 0){

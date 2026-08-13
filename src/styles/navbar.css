@@ -10,6 +10,10 @@ ul li {
   float: left;
 }
 
+.cart{
+    float: right;
+}
+
 ul li a {
   display: block;
   color: white;
@@ -22,6 +26,68 @@ ul li a:hover {
   background-color: #111111;
 }
 
-ul li a.active {
-  background-color: #04AA6D;
+/*Cart*/
+.cart-container{
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.cart-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Base style for the icon */
+.cart-icon {
+  font-size: 32px; /* Adjust size based on design layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Absolute positioning for the dynamic badge */
+.cart-badge {
+  position: absolute;
+  top: -5px;          /* Pulls badge above the top boundary */
+  right: -8px;        /* Pushes badge past the right boundary */
+  background-color: #ff3b30; /* Bright notification red color */
+  color: #ffffff;     /* White contrast text */
+  font-size: 12px;
+  font-weight: bold;
+  
+  /* Creates a perfect circle */
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  
+  /* Centers the number inside the circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.cart-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-svg {
+  width: 24px;
+  height: 24px;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.cart-button:hover .cart-svg {
+  color: #0070f3; 
 }
