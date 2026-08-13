@@ -5,7 +5,7 @@ import Popup from "./Popup";
 import CheckoutPage from "../pages/CheckoutPage";
 import cartImage from "../assets/cart.png"
 
-export default function Navbar({products, setProducts}){
+export default function Navbar({products, dispatch}){
 
     const [cartCount, setCartCount] = useState(0)
     const [isPopupOpen, setIsPopupOpen] = useState(false); // State tracking
@@ -42,7 +42,7 @@ export default function Navbar({products, setProducts}){
             </div>
             
             <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-                <CheckoutPage products={products} setProducts={setProducts}/>
+                <CheckoutPage products={products} dispatch={dispatch}/>
             </Popup>
         </li>
       </ul>

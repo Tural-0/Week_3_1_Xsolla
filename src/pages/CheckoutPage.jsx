@@ -1,10 +1,10 @@
 import Product from "../components/Product";
 import '../styles/checkout.css'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
-export default function CheckoutPage({products, setProducts}) {
+export default function CheckoutPage({products, dispatch}) {
   const [name, setName] = useLocalStorage("userName","")
   const [email, setEmail] = useLocalStorage("email","")
   const [address, setAddress] = useLocalStorage("address","")
@@ -32,26 +32,6 @@ export default function CheckoutPage({products, setProducts}) {
     (total, product) => Math.round((total + product.price * product.quantity) * 100)/100,
     0
   );
-
-  function increaseQuantity(id) {
-    setProducts(prev =>
-      prev.map(product =>
-        product.id === id
-          ? { ...product, quantity: product.quantity + 1 }
-          : product
-      )
-    );
-  }
-
-  function decreaseQuantity(id) {
-    setProducts(prev =>
-      prev.map(product =>
-        product.id === id
-          ? { ...product, quantity: product.quantity - 1 }
-          : product
-      )
-    );
-  }
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevents page reload
@@ -86,8 +66,8 @@ export default function CheckoutPage({products, setProducts}) {
             <Product
             key={product.id}
             product={product}
-            onIncrease={increaseQuantity}
-            onDecrease={decreaseQuantity}/>
+            onIncrease={() => dispatch({type:"INCREASE", id: product.id})}
+            onDecrease={() => dispatch({type:"DECREASE", id: product.id})}/>
           )
         }
       })}

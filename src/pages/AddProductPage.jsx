@@ -1,9 +1,9 @@
 import '../styles/checkout.css'
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from '../components/Navbar';
 
-export default function AddProductPage({products, setProducts}) {
+export default function AddProductPage({products, dispatch}) {
   const [name, setName] = useState("")
   const [price, setPrice] = useState(0)
   const [img, setImg] = useState("")
@@ -17,27 +17,13 @@ export default function AddProductPage({products, setProducts}) {
         return
     }
 
-    addProduct()
+    dispatch({type: "ADD", name: name, price: price, img: img})
     navigate("/") // back to items
   };
 
-  function addProduct() {
-    const id = (products[products.length - 1].id ?? 0) + 1;
-
-    const product = {
-      id,
-      name: name,
-      price: parseInt(price),
-      quantity: 0,
-      imageUrl: img
-    };
-
-    setProducts((prevValues) => [...prevValues, product]);
-  }
-
   return (
     <>
-    <Navbar products={products} setProducts={setProducts}/>
+    <Navbar products={products} dispatch={dispatch}/>
     <div className="container">
       <div className="create">
         <h3>Product details</h3>
